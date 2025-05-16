@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  min-height: 100vh;
+}
+
+
 body {
   background-color: black;
 }
