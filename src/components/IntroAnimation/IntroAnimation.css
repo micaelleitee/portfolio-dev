@@ -1,0 +1,15 @@
+.intro-wrapper {
+  position: relative;
+  height: 100vh; /* Ocupa a tela inteira */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  z-index: 10;
+}
+
+.intro-logo {
+  width: 500px;
+  height: auto;
+  transition: transform 0.3s ease;
+}

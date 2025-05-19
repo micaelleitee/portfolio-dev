@@ -6,11 +6,17 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100vh;
 }
 
-
 body {
   background-color: black;
+}
+
+.page-content {
+  min-height: 200vh; /* Para permitir rolagem */
+  padding: 100px 20px;
 }
