@@ -1,52 +1,59 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useNavigate } from "react-router-dom"
 import "./IntroAnimation.css"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const IntroAnimation = ({ onFinish }) => {
+export default function IntroAnimation() {
   const wrapperRef = useRef(null)
   const logoRef = useRef(null)
+  const navigate = useNavigate()
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: wrapperRef.current,
-        start: "top top",
-        end: "+=100%",
-        scrub: true,
-        pin: true,
-        onLeave: () => {
-          // Chama a função onFinish quando a rolagem passa da animação
-          if (onFinish) {
-            onFinish()
-          }
-        },
-      },
-    })
+    // Se o usuário já viu a intro, pula
+    if (sessionStorage.getItem("introPlayed")) {
+      navigate("/home")
+      return
+    }
 
-    tl.to(logoRef.current, {
-      scale: 5,
-      opacity: 0,
-      ease: "power3.out",
-    })
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapperRef.current,
+          start: "top top",
+          end: "+=200%",
+          scrub: true,
+          pin: true,
+          anticipatePin: 1,
+          onLeave: () => {
+            sessionStorage.setItem("introPlayed", "true") // ⬅️ Só aqui!
+            setIsVisible(false)
+            navigate("/home")
+          },
+        },
+      })
+
+      tl.to(logoRef.current, {
+        scale: 8,
+        opacity: 0,
+        ease: "power2.inOut",
+      })
+    }, wrapperRef)
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      ctx.revert()
     }
-  }, [onFinish])
+  }, [navigate])
+
+  if (!isVisible) return null // Evita render
 
   return (
-    <div className="intro-wrapper" ref={wrapperRef}>
-      <img
-        src="/LOGO_MKL.svg" // Substitua pelo caminho correto da sua logo
-        alt="Logo"
-        className="intro-logo"
-        ref={logoRef}
-      />
-    </div>
+    <section ref={wrapperRef} className="intro-wrapper">
+      <img ref={logoRef} src="/LOGO_MKL.svg" alt="Logo" className="logo" />
+    </section>
   )
 }
-
-export default IntroAnimation

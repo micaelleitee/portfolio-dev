@@ -3,7 +3,7 @@ import "./Header.css"
 
 const Header = () => {
   return (
-    <header className="fixed top-2 left-1/2 -translate-x-1/2 w-full max-w-7xl mx-auto z-50 h-16 flex justify-between items-center px-5 py-2">
+    <header className="fixed top-2 left-1/2 -translate-x-1/2 w-full max-w-7xl mx-auto z-50 h-16 flex justify-between items-center px-5 py-2 cursor-pointer">
       <img src="/LOGO_MKL.svg" alt="logo" className="w-20" />
       <div className="p-0.5 bg-gradient-to-r from-[#C04406] to-[#CE89F8] rounded-full nav-bars">
         <div className="bg-black backdrop-blur-xl rounded-full">
@@ -32,7 +32,7 @@ const Header = () => {
         <input
           type="button"
           value="Contato"
-          className="bg-gradient-to-r from-[#C04406] to-[#CE89F8] text-white font-medium px-5 py-0.5 rounded-full hover:"
+          className="bg-gradient-to-r from-[#C04406] to-[#CE89F8] text-white font-medium px-5 py-0.5 rounded-full cursor-pointer"
         />
         <img
           src="/menu.svg"
